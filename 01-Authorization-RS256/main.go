@@ -6,11 +6,17 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/clarketm/auth0-golang-api-samples/01-Authorization-RS256/auth"
+
 	auth0 "github.com/auth0-community/go-auth0"
 	"github.com/gorilla/mux"
 	jose "gopkg.in/square/go-jose.v2"
 	jwt "gopkg.in/square/go-jose.v2/jwt"
 )
+
+const JWKS_URI = auth.JWKS_URI
+const AUTH0_API_ISSUER = auth.AUTH0_API_ISSUER
+var AUTH0_API_AUDIENCE = auth.AUTH0_API_AUDIENCE
 
 type Response struct {
 	Message string `json:"message"`

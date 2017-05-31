@@ -1,3 +1,5 @@
+auth
+
 const JWKS_URI = "https://{DOMAIN}/.well-known/jwks.json"
 const AUTH0_API_ISSUER = "https://{DOMAIN}.auth0.com/"
 
