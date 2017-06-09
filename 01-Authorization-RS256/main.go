@@ -3,26 +3,41 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strings"
-
-	"github.com/clarketm/auth0-golang-api-samples/01-Authorization-RS256/auth"
 
 	auth0 "github.com/auth0-community/go-auth0"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	jose "gopkg.in/square/go-jose.v2"
 	jwt "gopkg.in/square/go-jose.v2/jwt"
 )
 
-const JWKS_URI = auth.JWKS_URI
-const AUTH0_API_ISSUER = auth.AUTH0_API_ISSUER
-var AUTH0_API_AUDIENCE = auth.AUTH0_API_AUDIENCE
+var JWKS_URI string
+var AUTH0_API_ISSUER string
+var AUTH0_API_AUDIENCE []string
 
 type Response struct {
 	Message string `json:"message"`
 }
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	JWKS_URI = os.Getenv("JWKS_URI")
+	AUTH0_API_ISSUER = os.Getenv("AUTH0_API_ISSUER")
+	AUTH0_API_AUDIENCE = []string{os.Getenv("AUTH0_API_AUDIENCE")}
+
+	fmt.Println("JWKS_URI: ", JWKS_URI)
+	fmt.Println("AUTH0_API_ISSUER: ", AUTH0_API_ISSUER)
+	fmt.Println("AUTH0_API_AUDIENCE: ", AUTH0_API_AUDIENCE)
+
 	r := mux.NewRouter()
 
 	// This route is always accessible
